@@ -1,6 +1,5 @@
 module Renzu
     ( module Renzu.Getter
-    , module Renzu.Index
     , module Renzu.Lens
     , module Renzu.Optic
     , module Renzu.Prism
@@ -11,7 +10,6 @@ module Renzu
 ----------------------------------------------------------------
 
 import Renzu.Getter
-import Renzu.Index
 import Renzu.Lens
 import Renzu.Optic
 import Renzu.Prism

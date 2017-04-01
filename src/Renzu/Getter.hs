@@ -69,8 +69,7 @@ iviews l = asks . runForget . l . Indexed . Forget
 {-# INLINE iviews #-}
 
 (^@.) :: s -> IxGetter i s t a b -> (i, a)
--- (^@.) = flip iview
-(^@.) s l = iview l s
+(^@.) = flip iview
 {-# INLINE (^@.) #-}
 
 ito :: (s -> (i, a)) -> IxFold r i s t a b
@@ -82,8 +81,7 @@ ilike = ito . const
 {-# INLINE ilike #-}
 
 iuse :: MonadState s m => IxGetter i s t a b -> m (i, a)
--- iuse = gets . iview
-iuse l = gets $ iview l
+iuse = gets . iview
 {-# INLINE iuse #-}
 
 iuses :: MonadState s m => IxFold r i s t a b -> ((i, a) -> r) -> m r

@@ -90,8 +90,8 @@ iuses l = gets . iviews l
 
 ----------------------------------------------------------------
 
-preview :: Fold (Maybe a) s t a b -> s -> Maybe a
-preview l = runForget . l . Forget $ Just
+preview :: MonadReader s m => Fold (Maybe a) s t a b -> m (Maybe a)
+preview l = views l Just
 {-# INLINE preview #-}
 
 (^?) :: s -> Fold (Maybe a) s t a b -> Maybe a

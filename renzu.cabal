@@ -1,0 +1,37 @@
+name:                renzu
+version:             0.0.0.0
+-- synopsis:
+-- description:
+homepage:            https://github.com/acple/renzu#readme
+license:             BSD3
+license-file:        LICENSE
+author:              acple
+maintainer:          silentsphere110@gmail.com
+copyright:           2017 acple
+category:            Lenses
+build-type:          Simple
+extra-source-files:  README.md
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Renzu
+                       Renzu.Getter
+                       Renzu.Index
+                       Renzu.Lens
+                       Renzu.Optic
+                       Renzu.Prism
+                       Renzu.Setter
+                       Renzu.Tuple
+
+  build-depends:       base >= 4.7 && < 5,
+                       profunctors >= 5,
+                       mtl
+  ghc-options:         -Wall -O2
+  default-language:    Haskell2010
+  default-extensions:  Rank2Types
+                       FlexibleContexts
+
+source-repository head
+  type:     git
+  location: https://github.com/acple/renzu

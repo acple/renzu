@@ -61,11 +61,11 @@ uses l = gets . views l
 ----------------------------------------------------------------
 
 iview :: MonadReader s m => IxGetter i s t a b -> m (i, a)
-iview l = iviews l id
+iview l = iviews l (,)
 {-# INLINE iview #-}
 
-iviews :: MonadReader s m => IxFold r i s t a b -> ((i, a) -> r) -> m r
-iviews l = asks . runForget . l . Indexed . Forget
+iviews :: MonadReader s m => IxFold r i s t a b -> (i -> a -> r) -> m r
+iviews l = asks . runForget . l . Indexed . Forget . uncurry
 {-# INLINE iviews #-}
 
 (^@.) :: s -> IxGetter i s t a b -> (i, a)
@@ -84,7 +84,7 @@ iuse :: MonadState s m => IxGetter i s t a b -> m (i, a)
 iuse = gets . iview
 {-# INLINE iuse #-}
 
-iuses :: MonadState s m => IxFold r i s t a b -> ((i, a) -> r) -> m r
+iuses :: MonadState s m => IxFold r i s t a b -> (i -> a -> r) -> m r
 iuses l = gets . iviews l
 {-# INLINE iuses #-}
 

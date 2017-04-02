@@ -11,7 +11,7 @@ import Renzu.Optic
 type Lens s t a b = forall p. Strong p => Optic p s t a b
 type Lens' s a = Lens s s a a
 
-type IxLens i s t a b = forall p q. (Strong p, Strong q) => IxOptical p q i s t a b
+type IxLens i s t a b = forall p q. Strong q => IxOptical p q i s t a b
 type IxLens' i s a = IxLens i s s a a
 
 ----------------------------------------------------------------

@@ -31,10 +31,10 @@ infix  4 %=, .=, +=, -=, *=, //=, ||=, &&=, <>=, ?=
 infixr 2 <~
 infixr 4 %@~, .@~
 infix  4 %@=, .@=
+infixl 1 &
 
 (&) :: a -> (a -> b) -> b
 (&) = flip ($)
-infixl 1 &
 {-# INLINE (&) #-}
 
 ----------------------------------------------------------------
@@ -42,21 +42,22 @@ infixl 1 &
 over :: Setter s t a b -> (a -> b) -> s -> t
      -- ((a -> b) -> (s -> t)) -> (a -> b) -> (s -> t)
 over = id
+{-# INLINE over #-}
+
 (%~) :: Setter s t a b -> (a -> b) -> s -> t
 (%~) = over
-{-# INLINE over #-}
 {-# INLINE (%~) #-}
 
 set :: Setter s t a b -> b -> s -> t
 set l = l . const
+{-# INLINE set #-}
+
 (.~) :: Setter s t a b -> b -> s -> t
 (.~) = set
-{-# INLINE set #-}
 {-# INLINE (.~) #-}
 
 _apply :: (a -> c -> b) -> Setter s t a b -> c -> s -> t
 _apply op = (. flip op)
--- _apply op l c = l %~ (`op` c)
 {-# INLINE _apply #-}
 
 (+~) :: Num a => Setter s t a a -> a -> s -> t
@@ -95,21 +96,22 @@ _apply op = (. flip op)
 
 modifying :: MonadState s m => Setter s s a b -> (a -> b) -> m ()
 modifying l = modify . l
+{-# INLINE modifying #-}
+
 (%=) :: MonadState s m => Setter s s a b -> (a -> b) -> m ()
 (%=) = modifying
-{-# INLINE modifying #-}
 {-# INLINE (%=) #-}
 
 assign :: MonadState s m => Setter s s a b -> b -> m ()
 assign l = modifying l . const
+{-# INLINE assign #-}
+
 (.=) :: MonadState s m => Setter s s a b -> b -> m ()
 (.=) = assign
-{-# INLINE assign #-}
 {-# INLINE (.=) #-}
 
 _modify :: MonadState s m => (a -> c -> b) -> Setter s s a b -> c -> m ()
 _modify op = (. flip op) . (%=)
--- _modify op l c = l %= (`op` c)
 {-# INLINE _modify #-}
 
 (+=) :: (MonadState s m, Num a) => Setter' s a -> a -> m ()
@@ -152,28 +154,32 @@ _modify op = (. flip op) . (%=)
 
 iover :: IxSetter i s t a b -> (i -> a -> b) -> s -> t
 iover l = l . Indexed . uncurry
+{-# INLINE iover #-}
+
 (%@~) :: IxSetter i s t a b -> (i -> a -> b) -> s -> t
 (%@~) = iover
-{-# INLINE iover #-}
 {-# INLINE (%@~) #-}
 
 iset :: IxSetter i s t a b -> (i -> b) -> s -> t
 iset l = iover l . (const .)
+{-# INLINE iset #-}
+
 (.@~) :: IxSetter i s t a b -> (i -> b) -> s -> t
 (.@~) = iset
-{-# INLINE iset #-}
 {-# INLINE (.@~) #-}
 
 imodifying :: MonadState s m => IxSetter i s s a b -> (i -> a -> b) -> m ()
 imodifying l = modify . iover l
+{-# INLINE imodifying #-}
+
 (%@=) :: MonadState s m => IxSetter i s s a b -> (i -> a -> b) -> m ()
 (%@=) = imodifying
-{-# INLINE imodifying #-}
 {-# INLINE (%@=) #-}
 
 iassign :: MonadState s m => IxSetter i s s a b -> (i -> b) -> m ()
 iassign l = modify . iset l
+{-# INLINE iassign #-}
+
 (.@=) :: MonadState s m => IxSetter i s s a b -> (i -> b) -> m ()
 (.@=) = iassign
-{-# INLINE iassign #-}
 {-# INLINE (.@=) #-}

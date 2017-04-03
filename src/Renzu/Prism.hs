@@ -56,5 +56,5 @@ only a = nearly a (== a)
 {-# INLINE only #-}
 
 nearly :: a -> (a -> Bool) -> Prism' a ()
-nearly a p = prism' (const a) $ guard . p
+nearly a p = prism' (const a) (guard . p)
 {-# INLINE nearly #-}

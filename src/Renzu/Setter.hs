@@ -1,15 +1,19 @@
 module Renzu.Setter
-    ( (&)
+    ( Setter, Setter', IxSetter, IxSetter'
+    , (&)
     , over, set
     , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (?~)
     , modifying, assign
     , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (?=), (<~)
+    , iover, iset, imodifying, iassign
+    , (%@~), (.@~), (%@=), (.@=)
     ) where
 
 ----------------------------------------------------------------
 
 import Control.Monad.State.Class
 import Data.Semigroup
+import Renzu.Index
 import Renzu.Optic
 
 ----------------------------------------------------------------
@@ -17,11 +21,16 @@ import Renzu.Optic
 type Setter s t a b = Optic (->) s t a b
 type Setter' s a = Setter s s a a
 
+type IxSetter i s t a b = IxOptic (->) i s t a b
+type IxSetter' i s a = IxSetter i s s a a
+
 ----------------------------------------------------------------
 
 infixr 4 %~, .~, +~, -~, *~, //~, ||~, &&~, <>~, ?~
 infix  4 %=, .=, +=, -=, *=, //=, ||=, &&=, <>=, ?=
 infixr 2 <~
+infixr 4 %@~, .@~
+infix  4 %@=, .@=
 
 (&) :: a -> (a -> b) -> b
 (&) = flip ($)
@@ -138,3 +147,33 @@ _modify op = (. flip op) . (%=)
 (<~) :: MonadState s m => Setter s s a b -> m b -> m ()
 (<~) = (=<<) . (.=)
 {-# INLINE (<~) #-}
+
+----------------------------------------------------------------
+
+iover :: IxSetter i s t a b -> (i -> a -> b) -> s -> t
+iover l = l . Indexed . uncurry
+(%@~) :: IxSetter i s t a b -> (i -> a -> b) -> s -> t
+(%@~) = iover
+{-# INLINE iover #-}
+{-# INLINE (%@~) #-}
+
+iset :: IxSetter i s t a b -> (i -> b) -> s -> t
+iset l = iover l . (const .)
+(.@~) :: IxSetter i s t a b -> (i -> b) -> s -> t
+(.@~) = iset
+{-# INLINE iset #-}
+{-# INLINE (.@~) #-}
+
+imodifying :: MonadState s m => IxSetter i s s a b -> (i -> a -> b) -> m ()
+imodifying l = modify . iover l
+(%@=) :: MonadState s m => IxSetter i s s a b -> (i -> a -> b) -> m ()
+(%@=) = imodifying
+{-# INLINE imodifying #-}
+{-# INLINE (%@=) #-}
+
+iassign :: MonadState s m => IxSetter i s s a b -> (i -> b) -> m ()
+iassign l = modify . iset l
+(.@=) :: MonadState s m => IxSetter i s s a b -> (i -> b) -> m ()
+(.@=) = iassign
+{-# INLINE iassign #-}
+{-# INLINE (.@=) #-}

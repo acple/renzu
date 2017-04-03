@@ -24,7 +24,7 @@ type IxGetter' i s a = IxGetter i s s a a
 
 ----------------------------------------------------------------
 
-infixr 8 ^., ^@., ^?
+infixr 8 ^., ^?, ^@., ^@?
 
 ----------------------------------------------------------------
 
@@ -58,6 +58,18 @@ uses :: MonadState s m => Fold r s t a b -> (a -> r) -> m r
 uses l = gets . views l
 {-# INLINE uses #-}
 
+preview :: MonadReader s m => Fold (Maybe a) s t a b -> m (Maybe a)
+preview l = views l Just
+{-# INLINE preview #-}
+
+previews :: MonadReader s m => Fold (Maybe r) s t a b -> (a -> r) -> m (Maybe r)
+previews l = views l . (Just .)
+{-# INLINE previews #-}
+
+(^?) :: s -> Fold (Maybe a) s t a b -> Maybe a
+(^?) = flip preview
+{-# INLINE (^?) #-}
+
 ----------------------------------------------------------------
 
 iview :: MonadReader s m => IxGetter i s t a b -> m (i, a)
@@ -88,12 +100,14 @@ iuses :: MonadState s m => IxFold r i s t a b -> (i -> a -> r) -> m r
 iuses l = gets . iviews l
 {-# INLINE iuses #-}
 
-----------------------------------------------------------------
+ipreview :: MonadReader s m => IxFold (Maybe (i, a)) i s t a b -> m (Maybe (i, a))
+ipreview l = ipreviews l (,)
+{-# INLINE ipreview #-}
 
-preview :: MonadReader s m => Fold (Maybe a) s t a b -> m (Maybe a)
-preview l = views l Just
-{-# INLINE preview #-}
+ipreviews :: MonadReader s m => IxFold (Maybe r) i s t a b -> (i -> a -> r) -> m (Maybe r)
+ipreviews l f = iviews l $ \i -> Just . f i
+{-# INLINE ipreviews #-}
 
-(^?) :: s -> Fold (Maybe a) s t a b -> Maybe a
-(^?) = flip preview
-{-# INLINE (^?) #-}
+(^@?) :: s -> IxFold (Maybe (i, a)) i s t a b -> Maybe (i, a)
+(^@?) = flip ipreview
+{-# INLINE (^@?) #-}

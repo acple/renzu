@@ -3,7 +3,7 @@ module Renzu.Setter
     , over, set
     , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (?~)
     , modifying, assign
-    , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (?=)
+    , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (?=), (<~)
     ) where
 
 ----------------------------------------------------------------
@@ -21,6 +21,7 @@ type Setter' s a = Setter s s a a
 
 infixr 4 %~, .~, +~, -~, *~, //~, ||~, &&~, <>~, ?~
 infix  4 %=, .=, +=, -=, *=, //=, ||=, &&=, <>=, ?=
+infixr 2 <~
 
 (&) :: a -> (a -> b) -> b
 (&) = flip ($)
@@ -78,7 +79,7 @@ _apply op = (. flip op)
 {-# INLINE (<>~) #-}
 
 (?~) :: Setter s t a (Maybe b) -> b -> s -> t
-(?~) = _apply $ flip (const . Just)
+(?~) = _apply (const Just)
 {-# INLINE (?~) #-}
 
 ----------------------------------------------------------------
@@ -131,5 +132,9 @@ _modify op = (. flip op) . (%=)
 {-# INLINE (<>=) #-}
 
 (?=) :: MonadState s m => Setter s s a (Maybe b) -> b -> m ()
-(?=) = _modify $ flip (const . Just)
+(?=) = _modify (const Just)
 {-# INLINE (?=) #-}
+
+(<~) :: MonadState s m => Setter s s a b -> m b -> m ()
+(<~) = (=<<) . (.=)
+{-# INLINE (<~) #-}

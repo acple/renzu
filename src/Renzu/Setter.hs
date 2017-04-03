@@ -1,8 +1,8 @@
 module Renzu.Setter
     ( (&)
-    , over
+    , over, set
     , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (?~)
-    , modifying
+    , modifying, assign
     , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (?=)
     ) where
 
@@ -37,14 +37,17 @@ over = id
 {-# INLINE over #-}
 {-# INLINE (%~) #-}
 
+set :: Setter s t a b -> b -> s -> t
+set l = l . const
+(.~) :: Setter s t a b -> b -> s -> t
+(.~) = set
+{-# INLINE set #-}
+{-# INLINE (.~) #-}
+
 _apply :: (a -> c -> b) -> Setter s t a b -> c -> s -> t
 _apply op = (. flip op)
 -- _apply op l c = l %~ (`op` c)
 {-# INLINE _apply #-}
-
-(.~) :: Setter s t a b -> b -> s -> t
-(.~) = _apply $ flip const
-{-# INLINE (.~) #-}
 
 (+~) :: Num a => Setter s t a a -> a -> s -> t
 (+~) = _apply (+)
@@ -87,14 +90,17 @@ modifying l = modify . l
 {-# INLINE modifying #-}
 {-# INLINE (%=) #-}
 
+assign :: MonadState s m => Setter s s a b -> b -> m ()
+assign l = modifying l . const
+(.=) :: MonadState s m => Setter s s a b -> b -> m ()
+(.=) = assign
+{-# INLINE assign #-}
+{-# INLINE (.=) #-}
+
 _modify :: MonadState s m => (a -> c -> b) -> Setter s s a b -> c -> m ()
 _modify op = (. flip op) . (%=)
 -- _modify op l c = l %= (`op` c)
 {-# INLINE _modify #-}
-
-(.=) :: MonadState s m => Setter s s a b -> b -> m ()
-(.=) = _modify $ flip const
-{-# INLINE (.=) #-}
 
 (+=) :: (MonadState s m, Num a) => Setter' s a -> a -> m ()
 (+=) = _modify (+)

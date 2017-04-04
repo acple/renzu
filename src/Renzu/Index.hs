@@ -1,4 +1,4 @@
-{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, TypeFamilies #-}
+{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FunctionalDependencies, TypeFamilies #-}
 module Renzu.Index where
 
 ----------------------------------------------------------------
@@ -27,10 +27,14 @@ instance Choice p => Choice (Indexed i p) where
 
 ----------------------------------------------------------------
 
-class Indexable i p q where
+class Indexable i p q | p -> q where
     indexed :: p a b -> q (i, a) b
 
-instance Profunctor p => Indexable i p p where
+instance Indexable i (->) (->) where
+    indexed = uncurry . const
+    {-# INLINE indexed #-}
+
+instance Indexable i (Forget r) (Forget r) where
     indexed = lmap snd
     {-# INLINE indexed #-}
 

@@ -17,7 +17,7 @@ library
   hs-source-dirs:      src
   exposed-modules:     Renzu
                        Renzu.Getter
-                       Renzu.Index
+                       Renzu.Indexable
                        Renzu.Lens
                        Renzu.Optic
                        Renzu.Prism

@@ -6,7 +6,7 @@ import Data.Monoid
 import Control.Monad.Reader.Class
 import Control.Monad.State.Class
 import Data.Profunctor
-import Renzu.Index
+import Renzu.Indexable
 import Renzu.Optic
 
 ----------------------------------------------------------------

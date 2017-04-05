@@ -13,7 +13,7 @@ module Renzu.Setter
 
 import Control.Monad.State.Class
 import Data.Semigroup
-import Renzu.Index
+import Renzu.Indexable
 import Renzu.Optic
 
 ----------------------------------------------------------------

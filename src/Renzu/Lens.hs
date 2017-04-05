@@ -3,7 +3,7 @@ module Renzu.Lens where
 ----------------------------------------------------------------
 
 import Data.Profunctor
-import Renzu.Index
+import Renzu.Indexable
 import Renzu.Optic
 
 ----------------------------------------------------------------

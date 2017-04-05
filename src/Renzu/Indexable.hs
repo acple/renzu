@@ -1,5 +1,5 @@
 {-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FunctionalDependencies, TypeFamilies #-}
-module Renzu.Index where
+module Renzu.Indexable where
 
 ----------------------------------------------------------------
 

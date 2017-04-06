@@ -24,3 +24,21 @@ lens get set = dimap (\s -> (s, get s)) (uncurry set) . second'
 ilens :: (s -> (i, a)) -> (s -> b -> t) -> IxLens i s t a b
 ilens get set = lens get set . indexed
 {-# INLINE ilens #-}
+
+----------------------------------------------------------------
+
+to :: (s -> a) -> Lens' s a
+to get = lens get const
+{-# INLINE to #-}
+
+like :: a -> Lens' s a
+like = to . const
+{-# INLINE like #-}
+
+ito :: (s -> (i, a)) -> IxLens' i s a
+ito get = ilens get const
+{-# INLINE ito #-}
+
+ilike :: i -> a -> IxLens' i s a
+ilike i a = ito . const $ (i, a)
+{-# INLINE ilike #-}

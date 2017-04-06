@@ -42,15 +42,6 @@ views l = asks . runForget . l . Forget
 (^.) = flip view
 {-# INLINE (^.) #-}
 
-to :: (s -> a) -> Fold r s t a b
-   -- (s -> a) -> Forget r a b -> Forget r s t
-to sa = Forget . runForget . lmap sa
-{-# INLINE to #-}
-
-like :: a -> Fold r s t a b
-like = to . const
-{-# INLINE like #-}
-
 use :: MonadState s m => Getter s t a b -> m a
 use = gets . view
 {-# INLINE use #-}
@@ -84,14 +75,6 @@ iviews l = asks . runForget . l . Indexed . Forget . uncurry
 (^@.) :: s -> IxGetter i s t a b -> (i, a)
 (^@.) = flip iview
 {-# INLINE (^@.) #-}
-
-ito :: (s -> (i, a)) -> IxFold r i s t a b
-ito sia = to sia . runIndexed
-{-# INLINE ito #-}
-
-ilike :: i -> a -> IxFold r i s t a b
-ilike i a = ito $ const (i, a)
-{-# INLINE ilike #-}
 
 iuse :: MonadState s m => IxGetter i s t a b -> m (i, a)
 iuse = gets . iview

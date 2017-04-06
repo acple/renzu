@@ -89,8 +89,8 @@ ito :: (s -> (i, a)) -> IxFold r i s t a b
 ito sia = to sia . runIndexed
 {-# INLINE ito #-}
 
-ilike :: (i, a) -> IxFold r i s t a b
-ilike = ito . const
+ilike :: i -> a -> IxFold r i s t a b
+ilike i a = ito $ const (i, a)
 {-# INLINE ilike #-}
 
 iuse :: MonadState s m => IxGetter i s t a b -> m (i, a)

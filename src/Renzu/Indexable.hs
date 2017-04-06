@@ -1,9 +1,15 @@
-{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FunctionalDependencies, TypeFamilies #-}
+{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances #-}
+{-# LANGUAGE FunctionalDependencies, TypeFamilies, GeneralizedNewtypeDeriving #-}
 module Renzu.Indexable where
 
 ----------------------------------------------------------------
 
 import Data.Profunctor
+
+----------------------------------------------------------------
+
+newtype Wrapped p a b = Wrap { unWrap :: p a b }
+    deriving (Profunctor, Strong, Choice)
 
 ----------------------------------------------------------------
 
@@ -35,6 +41,10 @@ instance Indexable i (->) (->) where
     {-# INLINE indexed #-}
 
 instance Indexable i (Forget r) (Forget r) where
+    indexed = lmap snd
+    {-# INLINE indexed #-}
+
+instance Profunctor p => Indexable i (Wrapped p) (Wrapped p) where
     indexed = lmap snd
     {-# INLINE indexed #-}
 

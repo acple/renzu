@@ -40,7 +40,7 @@ _Just = prism Just $ maybe (Left Nothing) Right
 {-# INLINE _Just #-}
 
 _Nothing :: Prism (Maybe a) (Maybe b) () b
-_Nothing = prism Just $ maybe (Right ()) (const $ Left Nothing)
+_Nothing = prism Just $ maybe (Right ()) (Left . const Nothing)
 {-# INLINE _Nothing #-}
 
 ----------------------------------------------------------------

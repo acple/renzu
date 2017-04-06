@@ -27,18 +27,18 @@ ilens get set = lens get set . indexed
 
 ----------------------------------------------------------------
 
-to :: (s -> a) -> Lens' s a
-to get = lens get const
+to :: (s -> a) -> Lens s b a b
+to get = lens get (const id)
 {-# INLINE to #-}
 
-like :: a -> Lens' s a
+like :: a -> Lens s b a b
 like = to . const
 {-# INLINE like #-}
 
-ito :: (s -> (i, a)) -> IxLens' i s a
-ito get = ilens get const
+ito :: (s -> (i, a)) -> IxLens i s b a b
+ito get = ilens get (const id)
 {-# INLINE ito #-}
 
-ilike :: i -> a -> IxLens' i s a
+ilike :: i -> a -> IxLens i s b a b
 ilike i a = ito . const $ (i, a)
 {-# INLINE ilike #-}

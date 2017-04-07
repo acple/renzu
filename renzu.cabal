@@ -30,7 +30,8 @@ library
                        mtl
   ghc-options:         -Wall -O2
   default-language:    Haskell2010
-  default-extensions:  Rank2Types
+  default-extensions:  RankNTypes
+                       FlexibleContexts
 
 source-repository head
   type:     git

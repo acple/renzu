@@ -1,5 +1,5 @@
-{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances #-}
-{-# LANGUAGE FunctionalDependencies, TypeFamilies, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FunctionalDependencies #-}
+{-# LANGUAGE TypeFamilies, GeneralizedNewtypeDeriving #-}
 module Renzu.Indexable where
 
 ----------------------------------------------------------------

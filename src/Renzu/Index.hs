@@ -13,7 +13,7 @@ infixr 9 <., .>, <.>
 
 ----------------------------------------------------------------
 
-(<.) :: Indexable i r q => IxOptic q i u v s t -> Optical (Wrapped p) (Wrapped r) s t a b -> IxOptical p q i u v a b
+(<.) :: Indexable i q r => IxOptic r i u v s t -> Optical (Wrapped p) (Wrapped q) s t a b -> IxOptical p r i u v a b
 (<.) l r = l . Indexed . indexed . unWrap . r . Wrap
 {-# INLINE (<.) #-}
 

@@ -13,8 +13,8 @@ module Renzu.Setter
 
 import Control.Monad.State.Class
 import Data.Semigroup
-import Renzu.Indexable
 import Renzu.Optic
+import Renzu.Profunctor
 
 ----------------------------------------------------------------
 

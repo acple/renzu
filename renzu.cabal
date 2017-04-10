@@ -27,7 +27,8 @@ library
                        Renzu.Tuple
   other-modules:       Renzu.Profunctor.Class
                        Renzu.Profunctor.Forget
-
+                       Renzu.Profunctor.Indexed
+                       Renzu.Profunctor.Wrapped
   build-depends:       base >= 4.8 && < 5,
                        mtl >= 2.2.1
   ghc-options:         -Wall -O2

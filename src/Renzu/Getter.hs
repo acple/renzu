@@ -1,13 +1,11 @@
 module Renzu.Getter where
 
 ----------------------------------------------------------------
-
-import Data.Monoid
 import Control.Monad.Reader.Class
 import Control.Monad.State.Class
-import Renzu.Profunctor
-import Renzu.Indexable
+import Data.Monoid
 import Renzu.Optic
+import Renzu.Profunctor
 
 ----------------------------------------------------------------
 

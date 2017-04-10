@@ -1,35 +1,9 @@
-{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FunctionalDependencies #-}
-{-# LANGUAGE TypeFamilies, GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE MultiParamTypeClasses, FlexibleInstances, FunctionalDependencies, TypeFamilies #-}
 module Renzu.Indexable where
 
 ----------------------------------------------------------------
 
 import Renzu.Profunctor
-
-----------------------------------------------------------------
-
-newtype Wrapped p a b = Wrap { unWrap :: p a b }
-    deriving (Profunctor, Strong, Choice)
-
-----------------------------------------------------------------
-
-newtype Indexed i p s t = Indexed { runIndexed :: p (i, s) t }
-
-instance Profunctor p => Profunctor (Indexed i p) where
-    dimap f g = Indexed . dimap (second f) g . runIndexed
-    {-# INLINE dimap #-}
-
-instance Strong p => Strong (Indexed i p) where
-    first  = Indexed . lmap (\(i, (a, c)) -> ((i, a), c)) . first . runIndexed
-    second = Indexed . lmap (\(i, (c, a)) -> (c, (i, a))) . second . runIndexed
-    {-# INLINE first #-}
-    {-# INLINE second #-}
-
-instance Choice p => Choice (Indexed i p) where
-    left  = Indexed . lmap (\(i, ac) -> either (\a -> Left (i, a)) Right ac) . left . runIndexed
-    right = Indexed . lmap (\(i, ca) -> either Left (\a -> Right (i, a)) ca) . right . runIndexed
-    {-# INLINE left #-}
-    {-# INLINE right #-}
 
 ----------------------------------------------------------------
 

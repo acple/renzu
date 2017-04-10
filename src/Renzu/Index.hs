@@ -2,9 +2,9 @@ module Renzu.Index where
 
 ----------------------------------------------------------------
 
-import Renzu.Profunctor
 import Renzu.Indexable
 import Renzu.Optic
+import Renzu.Profunctor
 
 ----------------------------------------------------------------
 

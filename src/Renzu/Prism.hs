@@ -3,9 +3,9 @@ module Renzu.Prism where
 ----------------------------------------------------------------
 
 import Control.Monad
-import Renzu.Profunctor
 import Text.Read
 import Renzu.Optic
+import Renzu.Profunctor
 
 ----------------------------------------------------------------
 
@@ -20,7 +20,7 @@ prism to from = dimap from (either id to) . right
 {-# INLINE prism #-}
 
 prism' :: (b -> s) -> (s -> Maybe a) -> Prism s s a b
-prism' to from = prism to $ \s -> maybe (Left s) Right $ from s
+prism' to from = prism to (\s -> maybe (Left s) Right $ from s)
 {-# INLINE prism' #-}
 
 ----------------------------------------------------------------

@@ -1,17 +1,18 @@
 module Renzu.Setter
     ( Setter, Setter', IxSetter, IxSetter'
-    , (&)
     , over, set
     , (%~), (.~), (+~), (-~), (*~), (//~), (||~), (&&~), (<>~), (?~)
     , modifying, assign
     , (%=), (.=), (+=), (-=), (*=), (//=), (||=), (&&=), (<>=), (?=), (<~)
     , iover, iset, imodifying, iassign
     , (%@~), (.@~), (%@=), (.@=)
+    , (&)
     ) where
 
 ----------------------------------------------------------------
 
 import Control.Monad.State.Class
+import Data.Function ((&))
 import Data.Semigroup
 import Renzu.Optic
 import Renzu.Profunctor
@@ -31,11 +32,6 @@ infix  4 %=, .=, +=, -=, *=, //=, ||=, &&=, <>=, ?=
 infixr 2 <~
 infixr 4 %@~, .@~
 infix  4 %@=, .@=
-infixl 1 &
-
-(&) :: a -> (a -> b) -> b
-(&) = flip ($)
-{-# INLINE (&) #-}
 
 ----------------------------------------------------------------
 

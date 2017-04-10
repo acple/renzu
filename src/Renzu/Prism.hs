@@ -3,7 +3,7 @@ module Renzu.Prism where
 ----------------------------------------------------------------
 
 import Control.Monad
-import Data.Profunctor
+import Renzu.Profunctor
 import Text.Read
 import Renzu.Optic
 
@@ -16,7 +16,7 @@ type Prism' s a = Prism s s a a
 
 prism :: (b -> t) -> (s -> Either t a) -> Prism s t a b
       -- (b -> t) -> (s -> Either t a) -> (forall p. Choice p => p a b -> p s t)
-prism to from = dimap from (either id to) . right'
+prism to from = dimap from (either id to) . right
 {-# INLINE prism #-}
 
 prism' :: (b -> s) -> (s -> Maybe a) -> Prism s s a b
@@ -26,11 +26,11 @@ prism' to from = prism to $ \s -> maybe (Left s) Right $ from s
 ----------------------------------------------------------------
 
 _Left :: Prism (Either a c) (Either b c) a b
-_Left = left'
+_Left = left
 {-# INLINE _Left #-}
 
 _Right :: Prism (Either c a) (Either c b) a b
-_Right = right'
+_Right = right
 {-# INLINE _Right #-}
 
 ----------------------------------------------------------------

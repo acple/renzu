@@ -2,7 +2,7 @@ module Renzu.Lens where
 
 ----------------------------------------------------------------
 
-import Data.Profunctor
+import Renzu.Profunctor
 import Renzu.Indexable
 import Renzu.Optic
 
@@ -18,7 +18,7 @@ type IxLens' i s a = IxLens i s s a a
 
 lens :: (s -> a) -> (s -> b -> t) -> Lens s t a b
      -- (s -> a) -> (s -> b -> t) -> (forall p. Strong p => p a b -> p s t)
-lens get set = dimap (\s -> (s, get s)) (uncurry set) . second'
+lens get set = dimap (\s -> (s, get s)) (uncurry set) . second
 {-# INLINE lens #-}
 
 ilens :: (s -> (i, a)) -> (s -> b -> t) -> IxLens i s t a b

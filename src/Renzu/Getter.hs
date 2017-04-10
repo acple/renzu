@@ -5,7 +5,7 @@ module Renzu.Getter where
 import Data.Monoid
 import Control.Monad.Reader.Class
 import Control.Monad.State.Class
-import Data.Profunctor
+import Renzu.Profunctor
 import Renzu.Indexable
 import Renzu.Optic
 

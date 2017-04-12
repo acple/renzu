@@ -25,7 +25,8 @@ library
                        Renzu.Profunctor
                        Renzu.Setter
                        Renzu.Tuple
-  other-modules:       Renzu.Profunctor.Class
+  other-modules:       Renzu.Profunctor.Capture
+                       Renzu.Profunctor.Class
                        Renzu.Profunctor.Forget
                        Renzu.Profunctor.Indexed
                        Renzu.Profunctor.Wrapped

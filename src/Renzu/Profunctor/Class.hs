@@ -48,7 +48,7 @@ instance Strong (->) where
     first f ~(a, c) = (f a, c)
     {-# INLINE first #-}
 
-    second = fmap
+    second f ~(c, a) = (c, f a)
     {-# INLINE second #-}
 
 ----------------------------------------------------------------

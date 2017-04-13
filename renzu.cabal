@@ -30,7 +30,7 @@ library
                        Renzu.Profunctor.Forget
                        Renzu.Profunctor.Indexed
                        Renzu.Profunctor.Wrapped
-  build-depends:       base >= 4.8 && < 5,
+  build-depends:       base >= 4.9 && < 5,
                        mtl >= 2.2.1
   ghc-options:         -O2 -Wall -Wunsafe
   default-language:    Haskell2010

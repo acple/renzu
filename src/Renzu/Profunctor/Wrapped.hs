@@ -16,6 +16,12 @@ instance Profunctor p => Profunctor (Wrapped p) where
     dimap f g = _map (dimap f g)
     {-# INLINE dimap #-}
 
+    lmap = _map . lmap
+    {-# INLINE lmap #-}
+
+    rmap = _map . rmap
+    {-# INLINE rmap #-}
+
 instance Strong p => Strong (Wrapped p) where
     first = _map first
     {-# INLINE first #-}

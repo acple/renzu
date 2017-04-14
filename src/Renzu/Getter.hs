@@ -1,6 +1,7 @@
 module Renzu.Getter where
 
 ----------------------------------------------------------------
+
 import Control.Monad.Reader.Class
 import Control.Monad.State.Class
 import Data.Monoid

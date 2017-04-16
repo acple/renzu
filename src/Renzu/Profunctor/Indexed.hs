@@ -1,4 +1,6 @@
-module Renzu.Profunctor.Indexed(Indexed(..)) where
+module Renzu.Profunctor.Indexed
+    ( Indexed(..)
+    ) where
 
 ----------------------------------------------------------------
 

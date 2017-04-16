@@ -1,4 +1,6 @@
-module Renzu.Profunctor.Wrapped (Wrapped(..)) where
+module Renzu.Profunctor.Wrapped
+    ( Wrapped(..)
+    ) where
 
 ----------------------------------------------------------------
 

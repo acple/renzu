@@ -28,3 +28,10 @@ instance Monoid r => Choice (Forget r) where
 
     right (Forget k) = Forget (either mempty k)
     {-# INLINE right #-}
+
+instance Cochoice (Forget r) where
+    unleft (Forget k) = Forget (k . Left)
+    {-# INLINE unleft #-}
+
+    unright (Forget k) = Forget (k . Right)
+    {-# INLINE unright #-}

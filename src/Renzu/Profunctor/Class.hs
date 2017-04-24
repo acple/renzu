@@ -71,3 +71,29 @@ instance Choice (->) where
 
     right = fmap
     {-# INLINE right #-}
+
+----------------------------------------------------------------
+
+class Profunctor p => Costrong p where
+    unfirst  :: p (a, c) (b, c) -> p a b
+    unsecond :: p (c, a) (c, b) -> p a b
+    {-# MINIMAL unfirst | unsecond #-}
+
+    unfirst = unsecond . dimap swap swap
+    {-# INLINE unfirst #-}
+
+    unsecond = unfirst . dimap swap swap
+    {-# INLINE unsecond #-}
+
+----------------------------------------------------------------
+
+class Profunctor p => Cochoice p where
+    unleft  :: p (Either a c) (Either b c) -> p a b
+    unright :: p (Either c a) (Either c b) -> p a b
+    {-# MINIMAL unleft | unright #-}
+
+    unleft = unright . dimap (either Right Left) (either Right Left)
+    {-# INLINE unleft #-}
+
+    unright = unleft . dimap (either Right Left) (either Right Left)
+    {-# INLINE unright #-}

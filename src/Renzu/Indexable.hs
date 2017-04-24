@@ -26,6 +26,11 @@ instance Indexable i (Capture a) (Capture a) where
     indexed = lmap snd
     {-# INLINE indexed #-}
 
+instance Profunctor p => Indexable i (Re p s t) (Re p s t) where
+    indexed = lmap snd
+    {-# INLINE indexed #-}
+
 instance i ~ j => Indexable i (Indexed j p) p where
     indexed = runIndexed
     {-# INLINE indexed #-}
+

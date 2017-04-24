@@ -37,3 +37,17 @@ instance Choice p => Choice (Wrapped p) where
 
     right = _map right
     {-# INLINE right #-}
+
+instance Costrong p => Costrong (Wrapped p) where
+    unfirst = _map unfirst
+    {-# INLINE unfirst #-}
+
+    unsecond = _map unsecond
+    {-# INLINE unsecond #-}
+
+instance Cochoice p => Cochoice (Wrapped p) where
+    unleft = _map unleft
+    {-# INLINE unleft #-}
+
+    unright = _map unright
+    {-# INLINE unright #-}

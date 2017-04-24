@@ -31,3 +31,10 @@ instance Choice p => Choice (Indexed i p) where
 
     right = _map $ lmap (\(i, ca) -> fmap ((,) i) ca) . right
     {-# INLINE right #-}
+
+instance Costrong p => Costrong (Indexed i p) where
+    unfirst = _map $ unfirst . lmap (\((i, a), c) -> (i, (a, c)))
+    {-# INLINE unfirst #-}
+
+    unsecond = _map $ unsecond . lmap (\(c, (i, a)) -> (i, (c, a)))
+    {-# INLINE unsecond #-}

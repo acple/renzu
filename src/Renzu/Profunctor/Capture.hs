@@ -1,7 +1,9 @@
+{-# LANGUAGE FlexibleInstances #-}
 module Renzu.Profunctor.Capture where
 
 ----------------------------------------------------------------
 
+import Control.Applicative
 import Renzu.Profunctor.Class
 
 ----------------------------------------------------------------
@@ -28,3 +30,11 @@ instance Choice (Capture r) where
 
     right (Capture k) = Capture $ either (Left . Left) (either (Left . Right) Right . k)
     {-# INLINE right #-}
+
+instance Alternative f => Cochoice (Capture (f r)) where
+    unleft (Capture k) = Capture $ either (fmap (const empty)) Right . k . Left
+    {-# INLINE unleft #-}
+
+    unright (Capture k) = Capture $ either (either (Right . const empty) Left) Right . k . Right
+    {-# INLINE unright #-}
+

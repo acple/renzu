@@ -15,3 +15,7 @@ type Iso' s a = Iso s s a a
 iso :: (s -> a) -> (b -> t) -> Iso s t a b
 iso = dimap
 {-# INLINE iso #-}
+
+re :: Optic (Re p a b) s t a b -> Optic p b a t s
+re l = runRe . l . Re $ id
+{-# INLINE re #-}

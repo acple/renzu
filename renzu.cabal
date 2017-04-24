@@ -30,6 +30,7 @@ library
                        Renzu.Profunctor.Class
                        Renzu.Profunctor.Forget
                        Renzu.Profunctor.Indexed
+                       Renzu.Profunctor.Re
                        Renzu.Profunctor.Wrapped
   build-depends:       base >= 4.9 && < 5,
                        mtl >= 2.2.1

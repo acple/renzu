@@ -19,6 +19,7 @@ library
                        Renzu.Getter
                        Renzu.Index
                        Renzu.Indexable
+                       Renzu.Iso
                        Renzu.Lens
                        Renzu.Optic
                        Renzu.Prism

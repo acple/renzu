@@ -30,7 +30,7 @@ icompose f l r = l . r . Indexed . Indexed . lmap (\(i, (j, a)) -> (f i j, a)) .
 
 ----------------------------------------------------------------
 
-index :: (Profunctor q, Indexable i p q) => (a -> i) -> Optical q r s t a b -> IxOptical p r i s t a b
+index :: Profunctor q => Indexable i p q => (a -> i) -> Optical q r s t a b -> IxOptical p r i s t a b
 index f l = l . lmap (\a -> (f a, a)) . indexed
 {-# INLINE index #-}
 

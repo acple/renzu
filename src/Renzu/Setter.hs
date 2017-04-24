@@ -110,19 +110,19 @@ _modify :: MonadState s m => (a -> c -> b) -> Setter s s a b -> c -> m ()
 _modify op = (. flip op) . (%=)
 {-# INLINE _modify #-}
 
-(+=) :: (MonadState s m, Num a) => Setter' s a -> a -> m ()
+(+=) :: MonadState s m => Num a => Setter' s a -> a -> m ()
 (+=) = _modify (+)
 {-# INLINE (+=) #-}
 
-(-=) :: (MonadState s m, Num a) => Setter' s a -> a -> m ()
+(-=) :: MonadState s m => Num a => Setter' s a -> a -> m ()
 (-=) = _modify (-)
 {-# INLINE (-=) #-}
 
-(*=) :: (MonadState s m, Num a) => Setter' s a -> a -> m ()
+(*=) :: MonadState s m => Num a => Setter' s a -> a -> m ()
 (*=) = _modify (*)
 {-# INLINE (*=) #-}
 
-(//=) :: (MonadState s m, Fractional a) => Setter' s a -> a -> m ()
+(//=) :: MonadState s m => Fractional a => Setter' s a -> a -> m ()
 (//=) = _modify (/)
 {-# INLINE (//=) #-}
 
@@ -134,7 +134,7 @@ _modify op = (. flip op) . (%=)
 (&&=) = _modify (&&)
 {-# INLINE (&&=) #-}
 
-(<>=) :: (MonadState s m, Semigroup a) => Setter' s a -> a -> m ()
+(<>=) :: MonadState s m => Semigroup a => Setter' s a -> a -> m ()
 (<>=) = _modify (<>)
 {-# INLINE (<>=) #-}
 

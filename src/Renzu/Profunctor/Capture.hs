@@ -37,4 +37,3 @@ instance Alternative f => Cochoice (Capture (f r)) where
 
     unright (Capture k) = Capture $ either (either (Right . const empty) Left) Right . k . Right
     {-# INLINE unright #-}
-

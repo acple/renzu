@@ -52,7 +52,7 @@ preview l = previews l id
 {-# INLINE preview #-}
 
 previews :: MonadReader s m => Fold (Alt Maybe r) s t a b -> (a -> r) -> m (Maybe r)
-previews l f = fmap getAlt . views l $ Alt . Just . f
+previews l f = getAlt <$> views l (Alt . Just . f)
 {-# INLINE previews #-}
 
 (^?) :: s -> Fold (Alt Maybe a) s t a b -> Maybe a
@@ -102,7 +102,7 @@ ipreview l = ipreviews l (,)
 {-# INLINE ipreview #-}
 
 ipreviews :: MonadReader s m => IxFold (Alt Maybe r) i s t a b -> (i -> a -> r) -> m (Maybe r)
-ipreviews l f = fmap getAlt . iviews l $ \i -> Alt . Just . f i
+ipreviews l f = getAlt <$> iviews l (\i -> Alt . Just . f i)
 {-# INLINE ipreviews #-}
 
 (^@?) :: s -> IxFold (Alt Maybe (i, a)) i s t a b -> Maybe (i, a)

@@ -3,6 +3,7 @@ module Renzu.Lens where
 ----------------------------------------------------------------
 
 import Renzu.Indexable
+import Renzu.Iso
 import Renzu.Optic
 import Renzu.Profunctor
 
@@ -27,11 +28,11 @@ ilens get set = lens get set . indexed
 
 ----------------------------------------------------------------
 
-to :: (s -> a) -> Lens s b a b
-to get = lens get (const id)
+to :: (s -> a) -> Iso s b a b
+to get = iso get id
 {-# INLINE to #-}
 
-like :: a -> Lens s b a b
+like :: a -> Iso s b a b
 like = to . const
 {-# INLINE like #-}
 
